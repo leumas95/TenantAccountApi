@@ -1,0 +1,131 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Console Account API",
+		"_postman_id": "c698061a-c9f1-4216-b942-cb1223b44002",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Tenant",
+			"request": {
+				"url": "http://localhost:8080/tenants",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"string\",\r\n  \"paidTill\": \"2017-11-20\",\r\n  \"rentSurplus\": 0,\r\n  \"weeklyRent\": 100\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Tenant",
+			"request": {
+				"url": "http://localhost:8080/tenants/1",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"string\",\r\n  \"paidTill\": \"2017-11-20\",\r\n  \"rentSurplus\": 0,\r\n  \"weeklyRent\": 0\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Tenant Receipts",
+			"request": {
+				"url": "http://localhost:8080/tenants/1/receipts",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"string\",\r\n  \"paidTill\": \"2017-11-20\",\r\n  \"rentSurplus\": 0,\r\n  \"weeklyRent\": 0\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Tenant  Who Paid in the Last Hour",
+			"request": {
+				"url": {
+					"raw": "http://localhost:8080/tenants/filter?paidinlast=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tenants",
+						"filter"
+					],
+					"query": [
+						{
+							"key": "paidinlast",
+							"value": "1",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"string\",\r\n  \"paidTill\": \"2017-11-20\",\r\n  \"rentSurplus\": 0,\r\n  \"weeklyRent\": 0\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create Tenant Receipt",
+			"request": {
+				"url": "http://localhost:8080/tenants/1/pay",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"amount\": 250\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
