@@ -1,8 +1,9 @@
 package windall.console.account.api.utils
 
-import javax.persistence.*
-import java.time.LocalDate
 import java.sql.Date
+import java.time.LocalDate
+import javax.persistence.AttributeConverter
+import javax.persistence.Converter
 
 @Converter(autoApply = true)
 class LocalDateAttributeConverter : AttributeConverter <LocalDate, Date> {

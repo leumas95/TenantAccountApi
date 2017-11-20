@@ -1,7 +1,7 @@
 package windall.console.account.api.dtos
 
-import java.time.LocalDate
 import java.io.Serializable
+import java.time.LocalDate
 
 data class TenantDto (
 		var name: String,
@@ -10,6 +10,7 @@ data class TenantDto (
 		var rentSurplus: Long = 0
 ) : Serializable {
 	
+	//Unused constructor for serialization
 	@Suppress("unused")
 	private constructor(): this(
 			name = "",

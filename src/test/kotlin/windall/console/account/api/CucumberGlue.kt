@@ -1,12 +1,15 @@
 package windall.console.account.api
 
-import cucumber.api.Transform
+import com.fasterxml.jackson.databind.ObjectMapper
 import cucumber.api.java.Before
 import cucumber.api.java.en.Given
+import cucumber.api.java.en.Then
+import cucumber.api.java.en.When
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
-import org.springframework.test.context.web.WebAppConfiguration
+import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -16,14 +19,11 @@ import windall.console.account.api.dtos.TenantDto
 import windall.console.account.api.model.Tenant
 import java.nio.charset.Charset
 import java.time.LocalDate
-import com.fasterxml.jackson.databind.ObjectMapper
-import kotlin.test.*
-import org.springframework.test.context.ContextConfiguration
-import cucumber.api.java.en.When
-import cucumber.api.java.en.Then
-import org.slf4j.LoggerFactory
+import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(classes = arrayOf(Application::class))
 class CucumberGlue () {
 	
@@ -109,10 +109,10 @@ class CucumberGlue () {
 			//Check the responce has the same data you sent up and the database id has been populated
 			val responceRegisteredTenant = jsonToTenant(result.response.contentAsString)
 			assertNotNull(responceRegisteredTenant.id, "The registered tenant id is not set.")
-			assertEquals(responceRegisteredTenant.name, requestTenant.name, "The registered tenant name is not what was expected. ('${responceRegisteredTenant.name}' not '${requestTenant.name}')")
-			assertEquals(responceRegisteredTenant.weeklyRent, requestTenant.weeklyRent, "The registered tenant weekly rent is not what was expected. ('${responceRegisteredTenant.weeklyRent}' not '${requestTenant.weeklyRent}')")
-			assertEquals(responceRegisteredTenant.paidTill, requestTenant.paidTill, "The registered tenant paid till date is not what was expected. ('${responceRegisteredTenant.paidTill}' not '${requestTenant.paidTill}')")
-			assertEquals(responceRegisteredTenant.rentSurplus, requestTenant.rentSurplus, "The registered tenant rent surplus is not what was expected. ('${responceRegisteredTenant.rentSurplus}' not '${requestTenant.rentSurplus}')")
+			assertEquals(responceRegisteredTenant.name, requestTenant.name, "The registered tenant name is not what was expected.")
+			assertEquals(responceRegisteredTenant.weeklyRent, requestTenant.weeklyRent, "The registered tenant weekly rent is not what was expected.")
+			assertEquals(responceRegisteredTenant.paidTill, requestTenant.paidTill, "The registered tenant paid till date is not what was expected.")
+			assertEquals(responceRegisteredTenant.rentSurplus, requestTenant.rentSurplus, "The registered tenant rent surplus is not what was expected.")
 			//Save a refrence to the registeredTenant so we can do further operations on it
 			registeredTenants.put(name, responceRegisteredTenant)
 		}
@@ -137,9 +137,9 @@ class CucumberGlue () {
 				.andExpect(status().isCreated())
 				.andReturn()
 		val responceRegisteredTenant = jsonToTenant(result.response.contentAsString)
-		assertEquals(responceRegisteredTenant.id, requestRegisteredTenant.id, "The registered tenant id is not the same. ('${responceRegisteredTenant.id}' not '${requestRegisteredTenant.id}')")
-		assertEquals(responceRegisteredTenant.name, requestRegisteredTenant.name, "The registered tenant name is not what was expected. ('${responceRegisteredTenant.name}' not '${requestRegisteredTenant.name}')")
-		assertEquals(responceRegisteredTenant.weeklyRent, requestRegisteredTenant.weeklyRent, "The registered tenant weekly rent is not what was expected. ('${responceRegisteredTenant.weeklyRent}' not '${requestRegisteredTenant.weeklyRent}')")
+		assertEquals(responceRegisteredTenant.id, requestRegisteredTenant.id, "The registered tenant id is not the same.")
+		assertEquals(responceRegisteredTenant.name, requestRegisteredTenant.name, "The registered tenant name is not what was expected.")
+		assertEquals(responceRegisteredTenant.weeklyRent, requestRegisteredTenant.weeklyRent, "The registered tenant weekly rent is not what was expected.")
 		registeredTenants.put(name, responceRegisteredTenant)
 	}
 	
@@ -155,7 +155,7 @@ class CucumberGlue () {
 		val registeredTenant = registeredTenants.get(name)
 		assertNotNull(registeredTenant, "This step is only for registered tenants.")
 		lastTennantNamed = name
-		assertEquals(registeredTenant!!.paidTill, LocalDate.parse(paidTill), "The registered tenant paid till date is not what was expected. ('${registeredTenant.paidTill}' not '${LocalDate.parse(paidTill)}')")
+		assertEquals(registeredTenant!!.paidTill, LocalDate.parse(paidTill), "The registered tenant paid till date is not what was expected.")
 	}
 	
 	@Then("^their rent credit will be updated to \\$(\\d+)$")
@@ -170,7 +170,7 @@ class CucumberGlue () {
 		val registeredTenant = registeredTenants.get(name)
 		assertNotNull(registeredTenant, "This step is only for registered tenants.")
 		lastTennantNamed = name
-		assertEquals(registeredTenant!!.rentSurplus, surplus, "The registered tenant rent surplus is not what was expected. ('${registeredTenant.rentSurplus}' not '${surplus})'")
+		assertEquals(registeredTenant!!.rentSurplus, surplus, "The registered tenant rent surplus is not what was expected.")
 	}
 	
 	internal fun tenantDtoToJson(tenant: TenantDto) = """

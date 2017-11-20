@@ -1,21 +1,22 @@
 package windall.console.account.api.controllers
 
-import windall.console.account.api.repository.TenantRepository
-import windall.console.account.api.repository.ReceiptRepository
-import org.springframework.web.bind.annotation.*
-import java.time.LocalDateTime
-import windall.console.account.api.model.Tenant
-import java.math.BigDecimal
-import org.springframework.http.ResponseEntity
-import java.net.URI
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder
-import windall.console.account.api.dtos.PaymentDto
-import windall.console.account.api.dtos.TenantDto
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import org.springframework.http.HttpStatus
-import io.swagger.annotations.ApiImplicitParams
-import io.swagger.annotations.ApiImplicitParam
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.ResponseStatus
+import org.springframework.web.bind.annotation.RestController
+import windall.console.account.api.dtos.PaymentDto
+import windall.console.account.api.dtos.TenantDto
+import windall.console.account.api.model.Tenant
+import windall.console.account.api.repository.ReceiptRepository
+import windall.console.account.api.repository.TenantRepository
+import java.time.LocalDateTime
 
 @RestController
 @Api(value="Rental Accounts", description="Operations for tracking the amount of rent paid (in Australian dollars only) by a tenant’s lease.")

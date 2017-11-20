@@ -1,15 +1,18 @@
 package windall.console.account.api.model
 
-import windall.console.account.api.persistence.Receipt
-import java.math.BigDecimal
-import java.time.LocalDate
-import javax.persistence.*
-import com.fasterxml.jackson.annotation.JsonFormat
-import java.math.BigInteger
-import java.math.RoundingMode
+import com.fasterxml.jackson.annotation.JsonIgnore
 import windall.console.account.api.dtos.PaymentDto
 import windall.console.account.api.dtos.TenantDto
-import com.fasterxml.jackson.annotation.JsonIgnore
+import windall.console.account.api.persistence.Receipt
+import java.time.LocalDate
+import javax.persistence.CascadeType
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.FetchType
+import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
+import javax.persistence.Id
+import javax.persistence.OneToMany
 
 @Entity
 data class Tenant (
